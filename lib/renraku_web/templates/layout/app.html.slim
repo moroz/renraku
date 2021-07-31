@@ -8,10 +8,6 @@ html lang="en"
     link rel="stylesheet" href="#{Routes.static_path(@conn, "/css/app.css")}"
 
   body
-    header
-      section.navbar
-        .navbar-brand
-          h1.title.site-name= gettext("Renraku Contact Data System")
 
     main.container role="main"
       = for {key, msg} <- get_flash(@conn) do

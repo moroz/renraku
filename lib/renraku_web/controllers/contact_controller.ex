@@ -4,14 +4,13 @@ defmodule RenrakuWeb.ContactController do
   alias Renraku.Contacts
   alias Renraku.Contacts.Contact
 
-  def index(conn, _params) do
-    case_contacts = Contacts.list_case_contacts()
-    render(conn, "index.html", case_contacts: case_contacts)
-  end
+  def new(conn, %{"case_id" => case_id}) do
+    changeset = Contacts.change_contact(%Contact{case_id: case_id})
 
-  def new(conn, _params) do
-    changeset = Contacts.change_contact(%Contact{})
-    render(conn, "new.html", changeset: changeset)
+    conn
+    |> assign(:case_id, case_id)
+    |> assign(:changeset, changeset)
+    |> render("new.html")
   end
 
   def create(conn, %{"contact" => contact_params}) do
@@ -22,19 +21,33 @@ defmodule RenrakuWeb.ContactController do
         |> redirect(to: Routes.contact_path(conn, :show, contact))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        case_id = Ecto.Changeset.get_change(changeset, :case_id)
+        render(conn, "new.html", changeset: changeset, case_id: case_id)
     end
   end
 
   def show(conn, %{"case_id" => case_id}) do
-    contact = Contacts.get_contact_by_case_id!(case_id)
-    render(conn, "show.html", contact: contact)
+    case Contacts.get_contact_by_case_id(case_id) do
+      nil ->
+        conn
+        |> put_status(404)
+        |> assign(:case_id, case_id)
+        |> render("not_found.html")
+
+      %Contact{} = contact ->
+        render(conn, "show.html", contact: contact)
+    end
   end
 
   def edit(conn, %{"case_id" => case_id}) do
     contact = Contacts.get_contact_by_case_id!(case_id)
     changeset = Contacts.change_contact(contact)
-    render(conn, "edit.html", contact: contact, changeset: changeset)
+
+    conn
+    |> assign(:case_id, case_id)
+    |> assign(:changeset, changeset)
+    |> assign(:contact, contact)
+    |> render("edit.html")
   end
 
   def update(conn, %{"case_id" => case_id, "contact" => contact_params}) do

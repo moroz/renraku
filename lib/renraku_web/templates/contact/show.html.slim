@@ -1,9 +1,6 @@
-h1 Show Contact
+h1.title Contact data for case ##{@contact.case_id}
 
 ul
-  li
-    strong Case:&nbsp;
-    = @contact.case_id
   li
     strong Title:&nbsp;
     = @contact.title
@@ -20,5 +17,6 @@ ul
     strong Address:&nbsp;
     = @contact.address
 
-span= link "Edit", to: Routes.contact_path(@conn, :edit, @contact)
-span= link "Back", to: Routes.contact_path(@conn, :index)
+.buttons
+  = link "Edit", to: Routes.contact_path(@conn, :edit, @contact), class: "button is-primary"
+  = link "Delete", to: Routes.contact_path(@conn, :delete, @contact), class: "button is-danger", data_confirm: "Are you sure you wish to permanently delete this record? This action cannot be reverted!"

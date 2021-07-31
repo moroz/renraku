@@ -31,6 +31,15 @@ config :phoenix, :template_engines,
   slime: PhoenixSlime.Engine,
   slimleex: PhoenixSlime.LiveViewEngine
 
+config :phoenix, :filter_parameters, [
+  "password",
+  "secret",
+  "first_name",
+  "last_name",
+  "phone_no",
+  "address"
+]
+
 config :phoenix_slime, :use_slim_extension, true
 
 config :joken,

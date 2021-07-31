@@ -1,5 +1,3 @@
-h1 Edit Contact
+h1.title Edit contact data for case ##{@contact.case_id}
 
 = render "form.html", Map.put(assigns, :action, Routes.contact_path(@conn, :update, @contact))
-
-span= link "Back", to: Routes.contact_path(@conn, :index)

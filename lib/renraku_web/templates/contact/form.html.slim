@@ -1,8 +1,9 @@
 = form_for @changeset, @action, fn f ->
   = if @changeset.action do
-    .alert.alert-danger
+    .notification.is-warning
       p Oops, something went wrong! Please check the errors below.
-  = for field_name <- ~w(case_id title first_name last_name phone_no address)a do
+  = hidden_input f, :case_id, value: @case_id
+  = for field_name <- ~w(title first_name last_name phone_no address)a do
     .field
       = label f, field_name, class: "label"
       = text_input f, field_name, class: "input"

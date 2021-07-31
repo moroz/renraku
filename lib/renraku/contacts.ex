@@ -21,21 +21,7 @@ defmodule Renraku.Contacts do
     Repo.all(Contact)
   end
 
-  @doc """
-  Gets a single contact.
-
-  Raises `Ecto.NoResultsError` if the Contact does not exist.
-
-  ## Examples
-
-      iex> get_contact!(123)
-      %Contact{}
-
-      iex> get_contact!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_contact!(id), do: Repo.get!(Contact, id)
+  def get_contact_by_case_id(case_id), do: Repo.get_by(Contact, case_id: case_id)
 
   def get_contact_by_case_id!(case_id), do: Repo.get_by!(Contact, case_id: case_id)
 

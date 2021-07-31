@@ -1,0 +1,6 @@
+h1.title Not found
+
+p No contact data found for the requested case. You may add new contact data if necessary.
+
+.buttons
+    = link "Add contact data", to: Routes.contact_path(@conn, :new, case_id: @case_id), class: "button is-primary"
