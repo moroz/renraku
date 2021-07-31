@@ -1,0 +1,24 @@
+h1 Show Contact
+
+ul
+  li
+    strong Case:&nbsp;
+    = @contact.case_id
+  li
+    strong Title:&nbsp;
+    = @contact.title
+  li
+    strong First name:&nbsp;
+    = @contact.first_name
+  li
+    strong Last name:&nbsp;
+    = @contact.last_name
+  li
+    strong Phone no:&nbsp;
+    = @contact.phone_no
+  li
+    strong Address:&nbsp;
+    = @contact.address
+
+span= link "Edit", to: Routes.contact_path(@conn, :edit, @contact)
+span= link "Back", to: Routes.contact_path(@conn, :index)

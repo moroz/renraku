@@ -1,0 +1,27 @@
+h1 Listing Case contacts
+
+table
+  thead
+    tr
+      th Case
+      th Title
+      th First name
+      th Last name
+      th Phone no
+      th Address
+      th
+  tbody
+    = for contact <- @case_contacts do
+      tr
+        td= contact.case_id
+        td= contact.title
+        td= contact.first_name
+        td= contact.last_name
+        td= contact.phone_no
+        td= contact.address
+        td class="text-right"
+          = link "Show", to: Routes.contact_path(@conn, :show, contact)
+          = link "Edit", to: Routes.contact_path(@conn, :edit, contact)
+          = link "Delete", to: Routes.contact_path(@conn, :delete, contact), method: :delete, data: [confirm: "Are you sure?"]
+
+span= link "New Contact", to: Routes.contact_path(@conn, :new)
