@@ -1,12 +1,12 @@
 = form_for @changeset, @action, fn f ->
   = if @changeset.action do
-    .notification.is-warning
-      p Oops, something went wrong! Please check the errors below.
+    p.notification.is-warning
+      | Oops, something went wrong! Please check the errors below.
   = hidden_input f, :case_id, value: @case_id
   = for field_name <- ~w(title first_name last_name phone_no address)a do
     .field
       = label f, field_name, class: "label"
       = error_tag f, field_name
       = text_input f, field_name, class: "input"
-  div
+  .buttons
     = submit "Submit", class: "button is-primary"
