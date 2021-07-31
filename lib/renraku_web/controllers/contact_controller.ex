@@ -58,7 +58,7 @@ defmodule RenrakuWeb.ContactController do
 
   def update(conn, %{"case_id" => case_id, "contact" => contact_params}) do
     contact = Contacts.get_contact_by_case_id!(case_id)
-    changeset = Contacts.change_contact(contact, contact_params)
+    changeset = Contact.update_changeset(contact, contact_params)
 
     case Contacts.update_contact(contact, contact_params) do
       {:ok, contact} ->

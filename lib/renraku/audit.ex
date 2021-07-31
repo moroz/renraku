@@ -1,4 +1,16 @@
 defmodule Renraku.Audit do
+  @moduledoc """
+  This module contains functions necessary to audit data modifications performed
+  on contact data records. At the time of this writing, it is not clear how the
+  actual auditing would be implemented. Possible options include:
+
+   * serializing events as Avro and sending to a Kafka queue,
+   * serializing events as JSON and sending to a cloud logging service (CloudWatch?)
+   * homebrew database-based auditing microservices (accessed over Kafka+Avro, see 1.)
+
+  At this point, all functions in this module are no-ops with no side effects.
+  """
+
   alias Ecto.Changeset
 
   alias Renraku.Contacts.Contact
@@ -8,7 +20,7 @@ defmodule Renraku.Audit do
     defstruct [:action, :case_id, :user_id, :changes, :timestamp]
 
     @actions [:create, :update, :delete]
-    def new(action, case_id, user_id, changes) when action in @actions do
+    def new(action, case_id, user_id, changes \\ []) when action in @actions do
       %__MODULE__{
         action: action,
         case_id: case_id,
@@ -21,28 +33,33 @@ defmodule Renraku.Audit do
 
   @auditable_fields ~w(address first_name last_name phone_no title)a
 
-  def log(:delete, %Contact{} = contact, user_id) do
-    do_log(:delete, contact.case_id, user_id)
+  def log(_event) do
+    :noop
   end
 
-  def log(:create, %Contact{} = contact, user_id) do
+  def log(action, contact, user_id, other \\ nil) do
+    event = build_event(action, contact, user_id, other)
+    log(event)
+  end
+
+  def build_event(:delete, %Contact{} = contact, user_id, _) do
+    Event.new(:delete, contact.case_id, user_id)
+  end
+
+  def build_event(:create, %Contact{} = contact, user_id, _) do
     changes = Enum.filter(@auditable_fields, fn key -> not is_nil(Map.get(contact, key)) end)
-    do_log(:create, contact.case_id, user_id, changes)
+    Event.new(:create, contact.case_id, user_id, changes)
   end
 
-  def log(:update, %Contact{} = contact, user_id, %Changeset{} = changeset) do
+  def build_event(:update, %Contact{} = contact, user_id, %Changeset{} = changeset) do
     changes = changeset |> Map.get(:changes) |> Map.keys()
 
     case changes do
       [] ->
-        :noop
+        nil
 
       _ ->
-        do_log(:update, contact.case_id, user_id, changes)
+        Event.new(:update, contact.case_id, user_id, changes)
     end
-  end
-
-  defp do_log(action, case_id, user_id, changes \\ []) do
-    Event.new(action, case_id, user_id, changes)
   end
 end
