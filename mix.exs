@@ -47,7 +47,10 @@ defmodule Renraku.MixProject do
       {:plug_cowboy, "~> 2.0"},
 
       # Templating
-      {:phoenix_slime, "~> 0.13.1"}
+      {:phoenix_slime, "~> 0.13.1"},
+
+      # Authorization
+      {:joken, "~> 2.0"}
     ]
   end
 

@@ -33,6 +33,12 @@ config :phoenix, :template_engines,
 
 config :phoenix_slime, :use_slim_extension, true
 
+config :joken,
+  default_signer: [
+    signer_alg: "RS256",
+    key_pem: File.read!("priv/jwt_rs256.pem")
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
