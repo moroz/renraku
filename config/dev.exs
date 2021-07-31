@@ -61,7 +61,7 @@ config :renraku, RenrakuWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/renraku_web/(live|views)/.*(ex)$",
-      ~r"lib/renraku_web/templates/.*(eex)$"
+      ~r"lib/renraku_web/templates/.*(eex|slim|slime)$"
     ]
   ]
 
