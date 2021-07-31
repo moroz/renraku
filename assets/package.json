@@ -8,14 +8,11 @@
   },
   "dependencies": {
     "bulma": "^0.9.3",
-    "phoenix": "^1.5.9",
-    "phoenix_html": "^2.14.3",
     "sass": "^1.37.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "hard-source-webpack-plugin": "^0.13.1",

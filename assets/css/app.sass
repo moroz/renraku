@@ -1,1 +1,61 @@
-@import bulma
+$input-height: 36px
+$primary-bg: #3498db
+$danger-bg: #c0392b
+$warning-bg: #f1c40f
+
+html
+  font-size: 16px
+
+html, body
+  margin: 0
+  padding: 0
+
+body
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, Verdana, sans-serif
+  font-size: 1rem
+
+.button
+  border: 0
+  font-size: 1rem
+  display: inline-block
+  padding: 0.5em 1.2em
+  border-radius: 5px
+  text-decoration: none
+  cursor: pointer
+
+.notification
+  padding: 1em
+  border: 1px solid black
+  margin: 0 0 1rem
+
+.button, .notification
+  &.is-primary, &.is-danger, &.is-info
+    color: white
+
+  &.is-primary, &.is-info
+    background: $primary-bg
+
+  &.is-danger
+    background: $danger-bg
+
+  &.is-warning
+    background: $warning-bg
+
+.label
+  display: block
+
+.field
+  margin-bottom: 0.5rem
+
+.input
+  height: $input-height
+  line-height: $input-height
+  font-size: 1rem
+  font-family: inherit
+  border: 1px solid
+  padding: 0 .7em
+
+.buttons
+  margin-top: 1rem
+  display: flex
+  gap: 1rem

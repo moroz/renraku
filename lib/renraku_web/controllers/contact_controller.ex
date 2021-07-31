@@ -64,12 +64,20 @@ defmodule RenrakuWeb.ContactController do
     end
   end
 
+  def confirm_delete(conn, %{"case_id" => case_id}) do
+    contact = Contacts.get_contact_by_case_id!(case_id)
+
+    conn
+    |> assign(:contact, contact)
+    |> render("confirm_delete.html")
+  end
+
   def delete(conn, %{"case_id" => case_id}) do
     contact = Contacts.get_contact_by_case_id!(case_id)
     {:ok, _contact} = Contacts.delete_contact(contact)
 
     conn
     |> put_flash(:info, "Contact deleted successfully.")
-    |> redirect(to: Routes.contact_path(conn, :index))
+    |> redirect(to: Routes.contact_path(conn, :show, case_id))
   end
 end

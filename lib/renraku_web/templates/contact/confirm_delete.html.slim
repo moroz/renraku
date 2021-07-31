@@ -1,0 +1,10 @@
+h1.title Confirm deletion
+
+p Are you sure you wish to permanently delete contact data for <strong>case ##{@contact.case_id}</strong>? This action cannot be reverted!
+
+.buttons
+  = link "Cancel", to: Routes.contact_path(@conn, :show, @contact), class: "button is-primary"
+
+  = form_for @conn, Routes.contact_path(@conn, :delete, @contact), [method: "POST"], fn f ->
+    <input type="hidden" name="_method" value="delete" />
+    = submit "Confirm", class: "button is-danger"

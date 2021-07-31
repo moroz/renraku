@@ -13,5 +13,3 @@ html lang="en"
       = for {key, msg} <- get_flash(@conn) do
         p[class="notification is-light is-#{key}"]= msg
       = @inner_content
-
-    script type="text/javascript" src="#{Routes.static_path(@conn, "/js/app.js")}"

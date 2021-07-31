@@ -6,7 +6,7 @@
   = for field_name <- ~w(title first_name last_name phone_no address)a do
     .field
       = label f, field_name, class: "label"
-      = text_input f, field_name, class: "input"
       = error_tag f, field_name
+      = text_input f, field_name, class: "input"
   div
     = submit "Submit", class: "button is-primary"
