@@ -19,7 +19,6 @@ body
   font-size: 1rem
   display: inline-block
   padding: 0.5em 1.2em
-  border-radius: 5px
   text-decoration: none
   cursor: pointer
 
@@ -43,6 +42,7 @@ body
 
 .label
   display: block
+  font-weight: bold
 
 .field
   margin-bottom: 0.5rem
@@ -58,4 +58,18 @@ body
 .buttons
   margin-top: 1rem
   display: flex
-  gap: 1rem
+  gap: .7rem
+
+.table
+  border-collapse: collapse
+  width: 400px
+  table-layout: fixed
+
+  tbody
+    th
+      width: 8rem
+
+    th, td
+      border: 1px solid
+      text-align: left
+      padding: .2em

@@ -1,21 +1,26 @@
 h1.title Contact data for case ##{@contact.case_id}
 
-ul
-  li
-    strong Title:&nbsp;
-    = @contact.title
-  li
-    strong First name:&nbsp;
-    = @contact.first_name
-  li
-    strong Last name:&nbsp;
-    = @contact.last_name
-  li
-    strong Phone no:&nbsp;
-    = @contact.phone_no
-  li
-    strong Address:&nbsp;
-    = @contact.address
+table.table
+  tbody
+    tr
+      th[scope="row"] Title
+      td= @contact.title
+
+    tr
+      th[scope="row"] First name
+      td= @contact.first_name
+
+    tr
+      th[scope="row"] Last name
+      td= @contact.last_name
+
+    tr
+      th[scope="row"] Phone no.
+      td= @contact.phone_no
+
+    tr
+      th[scope="row"] Address
+      td= @contact.address
 
 .buttons
   = link "Edit", to: Routes.contact_path(@conn, :edit, @contact), class: "button is-primary"
