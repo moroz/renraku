@@ -3,7 +3,7 @@ defmodule RenrakuWeb.ContactControllerTest do
 
   alias Renraku.Contacts
 
-  @jwt String.trim(File.read!("priv/test_jwt"))
+  @jwt File.read!("priv/test_jwt")
 
   setup %{conn: conn} do
     conn =

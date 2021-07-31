@@ -2,7 +2,7 @@ defmodule Renraku.TokenTest do
   use Renraku.DataCase, async: true
   alias Renraku.Token
 
-  @jwt File.read!("priv/test_jwt") |> String.trim()
+  @jwt File.read!("priv/test_jwt")
 
   describe "verify_and_validate/1" do
     test "returns {:ok, payload} for valid token" do

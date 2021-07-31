@@ -9,7 +9,7 @@ defmodule RenrakuWeb.Plugs.VerifyTokenTest do
     assert text_response(conn, 401) =~ ~r/unauthorized/i
   end
 
-  @valid_jwt String.trim(File.read!("priv/test_jwt"))
+  @valid_jwt File.read!("priv/test_jwt")
 
   test "lets request through when a valid JWT is attached in Authorization header", %{conn: conn} do
     conn =
