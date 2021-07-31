@@ -2,6 +2,10 @@ defmodule Renraku.Contacts.Contact do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @required ~w(case_id)a
+  @cast @required ++ ~w(title first_name last_name phone_no address)a
+
+  @derive {Phoenix.Param, key: :case_id}
   schema "case_contacts" do
     field :address, :string
     field :case_id, :integer
@@ -16,8 +20,8 @@ defmodule Renraku.Contacts.Contact do
   @doc false
   def changeset(contact, attrs) do
     contact
-    |> cast(attrs, [:case_id, :title, :first_name, :last_name, :phone_no, :address])
-    |> validate_required([:case_id, :title, :first_name, :last_name, :phone_no, :address])
+    |> cast(attrs, @cast)
+    |> validate_required(@required)
     |> unique_constraint(:case_id)
   end
 end

@@ -37,6 +37,8 @@ defmodule Renraku.Contacts do
   """
   def get_contact!(id), do: Repo.get!(Contact, id)
 
+  def get_contact_by_case_id!(case_id), do: Repo.get_by!(Contact, case_id: case_id)
+
   @doc """
   Creates a contact.
 

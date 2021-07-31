@@ -16,8 +16,8 @@ defmodule RenrakuWeb.Router do
   scope "/", RenrakuWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-    resources "/case_contacts", ContactController
+    get "/", ContactController, :index
+    resources "/case_contacts", ContactController, except: [:index], param: "case_id"
   end
 
   # Other scopes may use custom stacks.

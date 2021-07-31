@@ -26,19 +26,19 @@ defmodule RenrakuWeb.ContactController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    contact = Contacts.get_contact!(id)
+  def show(conn, %{"case_id" => case_id}) do
+    contact = Contacts.get_contact_by_case_id!(case_id)
     render(conn, "show.html", contact: contact)
   end
 
-  def edit(conn, %{"id" => id}) do
-    contact = Contacts.get_contact!(id)
+  def edit(conn, %{"case_id" => case_id}) do
+    contact = Contacts.get_contact_by_case_id!(case_id)
     changeset = Contacts.change_contact(contact)
     render(conn, "edit.html", contact: contact, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "contact" => contact_params}) do
-    contact = Contacts.get_contact!(id)
+  def update(conn, %{"case_id" => case_id, "contact" => contact_params}) do
+    contact = Contacts.get_contact_by_case_id!(case_id)
 
     case Contacts.update_contact(contact, contact_params) do
       {:ok, contact} ->
@@ -51,8 +51,8 @@ defmodule RenrakuWeb.ContactController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    contact = Contacts.get_contact!(id)
+  def delete(conn, %{"case_id" => case_id}) do
+    contact = Contacts.get_contact_by_case_id!(case_id)
     {:ok, _contact} = Contacts.delete_contact(contact)
 
     conn
