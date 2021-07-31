@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  pg:
+    image: postgres:alpine
+    ports: 
+      - "5433:5432"
+
+    volumes:
+      - "pg:/var/lib/postgresql/data"
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  web:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+      - api-deps:/app/deps
+      - api-build:/app/_build
+
+    depends_on:
+      - pg
+    links:
+      - pg
+
+    environment:
+      MIX_ENV: docker
+
+  webpack:
+    build: ./assets
+    volumes:
+      - ./assets:/app
+      - ./priv/static:/priv/static
+    environment:
+      NODE_ENV: development
+
+volumes:
+  api-deps:
+  api-build:
+  pg:
