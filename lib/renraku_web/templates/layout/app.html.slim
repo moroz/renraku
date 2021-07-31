@@ -9,17 +9,13 @@ html lang="en"
 
   body
     header
-      section.container
-        nav role="navigation"
-          ul
-            li
-              a href="https://hexdocs.pm/phoenix/overview.html" Get Started
-        a.phx-logo href="http://phoenixframework.org/"
-          img src="#{ Routes.static_path(@conn, "/images/phoenix.png") }" alt="Phoenix Framework Logo"
+      section.navbar
+        .navbar-brand
+          h1.title.site-name= gettext("Renraku Contact Data System")
 
     main.container role="main"
-      p.alert.alert-info role="alert"= get_flash(@conn, :info)
-      p.alert.alert-danger role="alert"= get_flash(@conn, :error)
-      = render @view_module, @view_template, assigns
+      = for {key, msg} <- get_flash(@conn) do
+        p[class="notification is-light is-#{key}"]= msg
+      = @inner_content
 
     script type="text/javascript" src="#{Routes.static_path(@conn, "/js/app.js")}"
