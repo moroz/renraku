@@ -16,8 +16,6 @@ defmodule RenrakuWeb.Plugs.VerifyToken do
 
   In development, it is possible to disable this check and allow unauthorized request
   to pass through by setting the environment variable `DISABLE_AUTH` to `"true"`.
-  This option does not set any test `:auth_payload` assign, but merely prevents the
-  middleware from denying access to the application.
   """
 
   import Plug.Conn
@@ -33,11 +31,13 @@ defmodule RenrakuWeb.Plugs.VerifyToken do
         if should_deny_access?() do
           deny_access(conn)
         else
-          conn
+          assign_fake_user_data(conn)
         end
 
-      payload ->
-        assign(conn, :auth_payload, payload)
+      %{"sub" => %{"id" => user_id} = payload} ->
+        conn
+        |> assign(:auth_payload, payload)
+        |> assign(:user_id, String.to_integer(user_id))
     end
   end
 
@@ -51,6 +51,14 @@ defmodule RenrakuWeb.Plugs.VerifyToken do
     |> put_resp_content_type("text/plain")
     |> send_resp(401, "Unauthorized")
     |> halt()
+  end
+
+  defp assign_fake_user_data(conn) do
+    payload = %{"id" => "2137", "email" => "test@example.com"}
+
+    conn
+    |> assign(:user_id, 2137)
+    |> assign(:auth_payload, payload)
   end
 
   @spec fetch_and_verify_token(conn :: Plug.Conn.t()) :: nil | map
