@@ -4,6 +4,7 @@ defmodule Renraku.Contacts.Contact do
 
   @required ~w(case_id)a
   @cast @required ++ ~w(title first_name last_name phone_no address)a
+  @update_cast @cast -- [:case_id]
 
   @derive {Phoenix.Param, key: :case_id}
   schema "case_contacts" do
@@ -23,5 +24,11 @@ defmodule Renraku.Contacts.Contact do
     |> cast(attrs, @cast)
     |> validate_required(@required)
     |> unique_constraint(:case_id)
+  end
+
+  @doc false
+  def update_changeset(contact, attrs) do
+    contact
+    |> cast(attrs, @update_cast)
   end
 end

@@ -71,7 +71,7 @@ defmodule Renraku.Contacts do
   """
   def update_contact(%Contact{} = contact, attrs) do
     contact
-    |> Contact.changeset(attrs)
+    |> Contact.update_changeset(attrs)
     |> Repo.update()
   end
 
