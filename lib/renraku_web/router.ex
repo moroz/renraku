@@ -17,8 +17,8 @@ defmodule RenrakuWeb.Router do
   scope "/", RenrakuWeb do
     pipe_through :browser
 
-    resources "/case_contacts", ContactController, except: [:index], param: "case_id"
-    get "/case_contacts/:case_id/delete", ContactController, :confirm_delete
+    resources "/contacts", ContactController, except: [:index], param: "case_id"
+    get "/contacts/:case_id/delete", ContactController, :confirm_delete
   end
 
   scope "/", RenrakuWeb do
