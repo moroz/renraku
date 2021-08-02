@@ -5,10 +5,5 @@ p Are you sure you wish to permanently delete contact data for <strong>case ##{@
 .buttons
   = link "Cancel", to: Routes.contact_path(@conn, :show, @contact), class: "button is-primary"
 
-  / Forms support only POST and GET, but there is a poorly documented REST workaround
-  / dating back to Rails times that allows overriding the HTTP method by passing
-  / a field called _method inside the form. Unsurprisingly, it works in Phoenix, too.
-  / We need this to bypass the JS ban.
-  = form_for @conn, Routes.contact_path(@conn, :delete, @contact), [method: "POST"], fn _ ->
-    <input type="hidden" name="_method" value="delete" />
+  = form_for @conn, Routes.contact_path(@conn, :delete, @contact), [method: "DELETE"], fn _ ->
     = submit "Confirm", class: "button is-danger"
