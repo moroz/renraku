@@ -46,6 +46,18 @@ defmodule Renraku.AuditTest do
       assert actual.action == :update
     end
 
+    test "returns nil when nothing changes", %{contact: contact} do
+      changeset =
+        Contact.update_changeset(contact, %{
+          first_name: "Max",
+          last_name: "Mustermann"
+        })
+
+      assert changeset.changes == %{}
+
+      refute Audit.build_event(:update, contact, 2137, changeset)
+    end
+
     test "serializes delete events", %{contact: contact} do
       %Event{} = actual = Audit.build_event(:delete, contact, 2137, nil)
       assert actual.action == :delete
